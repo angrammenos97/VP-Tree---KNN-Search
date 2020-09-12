@@ -17,7 +17,6 @@
 #include "vptree.h"
 
 #define THRESHOLD 10e-12
-#define MAXTHREADS 1024
 
 /* #define VERBOSE */
 
@@ -233,7 +232,7 @@ int main()
 	foundInTree = (int*)calloc(n, sizeof(int));
 
 	for (int i = 0; i < n * d; i++)
-		dataArr[i] = (double)rand() / RAND_MAX;
+		dataArr[i] = rand() % 100;
 
 	vptree* root = buildvp_gpu(dataArr, n, d);
 
