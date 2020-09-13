@@ -20,6 +20,10 @@ typedef struct vptree {
 */
 vptree* buildvp_cpu(double* X, int n, int d);
 vptree* buildvp_gpu(double* X, int n, int d);
+static vptree* buildvp(double* X, int n, int d)
+{
+	 return buildvp_gpu(X, n, d);
+}
 //! Return vantage-point subtree with points inside radius
 /*!
 \param node A vantage-point tree

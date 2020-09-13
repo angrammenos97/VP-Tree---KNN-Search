@@ -54,7 +54,7 @@ int main(int argc, char* argv[])
 	// Build search tree
 	printf("Building search tree... ");
 	gettimeofday(&startwtime, NULL);
-	vptree* tree = buildvp_gpu(X, nop, dim);
+	vptree* tree = buildvp(X, nop, dim);
 	gettimeofday(&endwtime, NULL);
 	p_time = (double)((endwtime.tv_usec - startwtime.tv_usec) / 1.0e6 + endwtime.tv_sec - startwtime.tv_sec);
 	printf("DONE in %fsec!\n", p_time);

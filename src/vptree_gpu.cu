@@ -8,8 +8,8 @@
 #include "distances.h"
 #include "quick_select.h"
 
-#define MAXTHREADSPERBLOCK	128	//maximun threads per block
-#define MAXPARALLELNODES	2048		//maximun number of threads for tree building
+#define MAXTHREADSPERBLOCK	1024	//maximun threads per block
+#define MAXPARALLELNODES	2048	//maximun number of threads for tree building
 
 //Device global memory
 __device__ double* pointsMain;

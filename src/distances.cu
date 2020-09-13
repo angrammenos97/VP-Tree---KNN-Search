@@ -10,20 +10,20 @@ __device__ unsigned int numberOfColumns, numberOfRows, diMaxThreadsPerBlock;
 
 __global__ void distance_kernel(double* points, unsigned int nodeOffset, unsigned int nodeLength)
 {
-	extern __shared__ double tmp[];
+	extern __shared__ double lastPoint[];
 	//load last point into shared mem
 	if (threadIdx.x < numberOfRows)
-		tmp[threadIdx.x] = *(points + (nodeLength - 1) + threadIdx.x * numberOfColumns);
+		lastPoint[threadIdx.x] = *(points + (nodeLength - 1) + threadIdx.x * numberOfColumns);
 	__syncthreads();
 	unsigned int pntIdx = blockIdx.x * blockDim.x + threadIdx.x;	//point index
-	double tempDiff;
+	double pointDist, tempDiff;
 	if (pntIdx < nodeLength - 1) {
-		tmp[numberOfRows + threadIdx.x] = 0.0;
+		pointDist = 0.0;
 		for (unsigned int d = 0; d < numberOfRows; d++) {
-			tempDiff = *(points + pntIdx + d * numberOfColumns) - tmp[d];
-			tmp[numberOfRows + threadIdx.x] += tempDiff * tempDiff;
+			tempDiff = *(points + pntIdx + d * numberOfColumns) - lastPoint[d];
+			pointDist += tempDiff * tempDiff;
 		}
-		distances[nodeOffset + pntIdx] = sqrt(tmp[numberOfRows + threadIdx.x]);		//save result back to global mem
+		distances[nodeOffset + pntIdx] = sqrt(pointDist);		//save result back to global mem
 	}
 }
 
@@ -32,7 +32,7 @@ __device__ void distance_from_last(double* points, unsigned int nodeOffset, unsi
 	unsigned int totalThreads = (numberOfRows > (nodeLength - 1)) ? numberOfRows : nodeLength - 1;
 	unsigned int blockSz = (totalThreads < diMaxThreadsPerBlock) ? totalThreads : diMaxThreadsPerBlock;
 	unsigned int gridSz = (totalThreads + blockSz - 1) / blockSz;
-	distance_kernel <<<gridSz, blockSz, (blockSz + numberOfRows) * sizeof(double), nodeStream>>> (points, nodeOffset, nodeLength);	//"+numberOfRows" to hold the last point in shared mem
+	distance_kernel <<<gridSz, blockSz, numberOfRows * sizeof(double), nodeStream>>> (points, nodeOffset, nodeLength);	//"+umberOfRows" to hold the last point in shared mem
 }
 
 __global__ void distance_init_kernel(double* d_distances, unsigned int numberOfPoints, unsigned int dimensionOfPoints, unsigned int maxThreadsPerBlock)

@@ -234,7 +234,7 @@ int main()
 	for (int i = 0; i < n * d; i++)
 		dataArr[i] = rand() % 100;
 
-	vptree* root = buildvp_gpu(dataArr, n, d);
+	vptree* root = buildvp(dataArr, n, d);
 
 	node* stack = NULL;
 
