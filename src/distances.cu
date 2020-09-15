@@ -11,11 +11,13 @@ __device__ unsigned int numberOfColumns, numberOfRows, diMaxThreadsPerBlock;
 __global__ void distance_kernel(double* points, unsigned int nodeOffset, unsigned int nodeLength)
 {
 	extern __shared__ double lastPoint[];
+	unsigned int pntIdx = threadIdx.x;	//thread index
 	//load last point into shared mem
 	if (threadIdx.x < numberOfRows)
-		lastPoint[threadIdx.x] = *(points + (nodeLength - 1) + threadIdx.x * numberOfColumns);
+		for (unsigned int stride = 0; (stride + pntIdx) < numberOfRows; stride += blockDim.x)
+			lastPoint[pntIdx + stride] = *(points + (nodeLength - 1) + ((pntIdx + stride) * numberOfColumns));
 	__syncthreads();
-	unsigned int pntIdx = blockIdx.x * blockDim.x + threadIdx.x;	//point index
+	pntIdx = blockIdx.x * blockDim.x + threadIdx.x;	//point index
 	double pointDist, tempDiff;
 	if (pntIdx < nodeLength - 1) {
 		pointDist = 0.0;
