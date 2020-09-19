@@ -34,7 +34,7 @@ int main(int argc, char* argv[])
 	printf("Building tree in GPU...");
 	vptree* root_gpu = buildvp_gpu(points, nop, dim);
 
-	printf("CPU %p\tGPU %p\n", root_cpu, root_gpu);
+	printf("\n");
 
 	free(points);
 	return 0;

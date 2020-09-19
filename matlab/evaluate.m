@@ -1,9 +1,9 @@
 % search the tree
 %clear;
-% data;
-q = rand(1,dim); % random query point (q)
+%data;
+q = ceil(max(X, [], 'all')) * rand(1,dim); % random query point (q)
 k = 3;
-tau = sqrt(2); % desired search radius
+tau = inf; % desired search radius
 list = repmat([0 tau], k, 1); % list with all neighbors
 [list, tau] = searchNb(tree, list, tau, q);
 % plot them to confirm
@@ -36,7 +36,13 @@ function [list, tau] = searchNb(tree, list, tau, q)
 end
 
 function Visualize(X, list, q, dim)
-    if (dim == 2)
+    if (dim == 1)
+        viscircles([q(:,1), 1], max(list(:,2)), 'Color', 'y');
+        plot(X, 1, 'b.')
+        plot(X(list(:,1)), 1, 'r.')
+        plot(q(:,1), 1, 'go')
+    elseif (dim == 2)
+        viscircles(q, max(list(:,2)), 'Color', 'y', 'LineWidth', 0.1);
         plot(X(:,1), X(:,2), 'b.')
         plot(X(list(:,1),1), X(list(:,1),2), 'r.')
         plot(q(:,1), q(:,2), 'go')
