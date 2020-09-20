@@ -33,8 +33,6 @@ int main(int argc, char* argv[])
 	X = (double*)malloc(nop * dim * sizeof(double));
 	for (unsigned int i = 0; i < nop * dim; i++)
 		*(X + i) = ((double)rand() / (RAND_MAX));
-	/*double tempX[] = { 10.5, 11.9, 14.2, 15.1, 8.3, 2.1, 3.8, 7.9, 0.1, 15.9 };
-	X = tempX;*/
 
 	gettimeofday(&endwtime, NULL);
 	double p_time = (double)((endwtime.tv_usec - startwtime.tv_usec) / 1.0e6 + endwtime.tv_sec - startwtime.tv_sec);
@@ -71,7 +69,7 @@ int main(int argc, char* argv[])
 	}
 
 	printf("Exiting\n");
-	//free(X);
+	free(X);
 	return 0;
 }
 

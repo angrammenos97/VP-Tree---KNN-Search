@@ -30,11 +30,4 @@ knnresult kNN(double *X, double  *Y, int n, int m, int d, int k);
 */
 knnresult distrAllkNN(double *X, int n, int d, int k);
 
-//////////////////////////////////
-#include "vptree.h"
-void node_to_element(double* treeMDs, unsigned int* treeIDXs, vptree* root, unsigned length);
-__global__ void knn_search_init(double* d_X, double* d_Y, double* d_ndist, unsigned int* d_nidx, double* d_treeMDs, unsigned int* d_treeIDXs, unsigned int* d_offsetStack, unsigned int* d_lengthStack,
-	double* d_parentMdStack, double* d_parentNDistStack, char* d_isInnerStack, unsigned int n, unsigned int m, unsigned int d, unsigned int k);
-__global__ void find_nearest_kernel();
-
 #endif
