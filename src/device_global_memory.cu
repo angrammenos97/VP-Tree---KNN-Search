@@ -50,7 +50,7 @@ static unsigned int smallest_power_two(unsigned int n)
 int qs_memory_allocate(unsigned int numberOfPoints, unsigned int maxParallelNodes)
 {
 	cudaError err;
-	unsigned int fixedNoP = smallest_power_two(numberOfPoints - 1);		//quick select needs length in powers of two
+	unsigned int fixedNoP = smallest_power_two(numberOfPoints + 1);		//quick select needs length in powers of two
 	//quick_select.cu global variables
 	err = cudaMalloc(&d_qsAux, fixedNoP * sizeof(double));										if (err != cudaSuccess) return err;
 	err = cudaMalloc(&d_f, fixedNoP * sizeof(unsigned int));									if (err != cudaSuccess) return err;
@@ -64,7 +64,7 @@ int qs_memory_allocate(unsigned int numberOfPoints, unsigned int maxParallelNode
 int di_memory_allocate(unsigned int numberOfPoints)
 {
 	cudaError err;
-	unsigned int fixedNoP = smallest_power_two(numberOfPoints - 1);		//quick select needs length in powers of two
+	unsigned int fixedNoP = smallest_power_two(numberOfPoints + 1);		//quick select needs length in powers of two
 	//distances.cu global variables
 	err = cudaMalloc(&d_distances, fixedNoP * sizeof(double));									if (err != cudaSuccess) return err;
 	return cudaSuccess;
@@ -73,7 +73,7 @@ int di_memory_allocate(unsigned int numberOfPoints)
 int vp_memory_allocate(unsigned int numberOfPoints, unsigned int dimensionOfPoints)
 {
 	cudaError err;
-	unsigned int fixedNoP = smallest_power_two(numberOfPoints - 1);		//quick select needs length in powers of two
+	unsigned int fixedNoP = smallest_power_two(numberOfPoints + 1);		//quick select needs length in powers of two
 	unsigned int maxNodes = smallest_power_two(numberOfPoints + 1) / 2;	//max nodes on the last level of the tree
 	//vptree.cu global variables
 	err = cudaMalloc(&d_points, (numberOfPoints * dimensionOfPoints) * sizeof(double));			if (err != cudaSuccess) return err;

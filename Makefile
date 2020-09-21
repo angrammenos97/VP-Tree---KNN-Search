@@ -12,7 +12,7 @@ MAINSDIR:= ./mains
 SRCS    := $(wildcard $(SRCDIR)/*.cu)
 OBJS    := $(patsubst $(SRCDIR)/%.cu,$(OBJDIR)/%.o,$(SRCS))
 MAINS	:= $(patsubst $(MAINSDIR)/%.cu,$(BINDIR)/%,$(wildcard $(MAINSDIR)/*.cu))
-CFLAGS  := -arch=sm_50 -cudart=shared -rdc=true -I$(INCDIR)
+CFLAGS  := -O0 -arch=sm_50 -cudart=shared -rdc=true -I$(INCDIR)
 LDFLAGS := -lm
 
 .PHONY: all clean

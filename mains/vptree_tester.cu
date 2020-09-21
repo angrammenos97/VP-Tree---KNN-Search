@@ -222,7 +222,7 @@ int verifyTree(vptree* T, double* vp, node** stack, double md, int isInner, int 
 
 int main()
 {
-	srand((unsigned int)time(NULL));	//789);
+	srand((unsigned int)time(NULL));
 	int n = 100;//data
 	int d = 4;//dimensions
 

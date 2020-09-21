@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include <math.h>
 #include <time.h>
-#include <chrono>
 
 /////////////////////////////////
 double* distance_from_last(double* X, int n, int dim)
@@ -91,11 +90,11 @@ vptree* buildvp_cpu(double* X, int n, int d)
 			*(X_copy + i * d + j) = *(X + i * d + j);
 	}
 
-	auto start = std::chrono::high_resolution_clock::now();
+	clock_t start_t, end_t;
+	start_t = clock();
 	vptree* root = vpt(X_copy, idx, n, d);
-	auto end = std::chrono::high_resolution_clock::now();
-	auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
-	printf("DONE in %ldmsec!\n", duration.count());
+	end_t = clock();
+	printf("DONE in %lfmsec!\n", ((double)(end_t - start_t) / CLOCKS_PER_SEC) * 1000.0);
 
 	return root;
 }

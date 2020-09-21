@@ -5,8 +5,8 @@
 #include <device_launch_parameters.h>
 #include "vptree.h"
 
-#define DefaultNumPoints 16
-#define DefaultDim 2
+#define DefaultNumPoints 100
+#define DefaultDim 4
 
 unsigned int nop = DefaultNumPoints;
 unsigned int dim = DefaultDim;
@@ -17,7 +17,7 @@ int main(int argc, char* argv[])
 {
 	help(argc, argv);
 
-	//srand((unsigned int)time(NULL));
+	srand((unsigned int)time(NULL));
 	double* points = (double*)malloc(nop * dim * sizeof(double));
 	clock_t start_t, end_t;
 
@@ -28,10 +28,10 @@ int main(int argc, char* argv[])
 	end_t = clock();
 	printf("DONE in %lfmsec!\n", ((double)(end_t - start_t) / CLOCKS_PER_SEC) * 1000.0);
 
-	printf("Building tree in CPU...");
+	printf("Building tree in CPU... ");
 	vptree* root_cpu = buildvp_cpu(points, nop, dim);
 
-	printf("Building tree in GPU...");
+	printf("Building tree in GPU... ");
 	vptree* root_gpu = buildvp_gpu(points, nop, dim);
 
 	printf("\n");

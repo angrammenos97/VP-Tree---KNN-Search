@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
 	help(argc, argv);
 	printf("Running with values n=%i, m=%i, d=%i, k=%i.\n", n, m, d, k);
 
-	//srand((unsigned int)time(NULL));
+	srand((unsigned int)time(NULL));
 
 	// Generate random point set
 	printf("Generating random data set. ");
